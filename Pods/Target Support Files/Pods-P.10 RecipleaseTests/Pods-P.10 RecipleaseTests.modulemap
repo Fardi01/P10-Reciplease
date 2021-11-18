@@ -1,0 +1,6 @@
+framework module Pods_P_10_RecipleaseTests {
+  umbrella header "Pods-P.10 RecipleaseTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

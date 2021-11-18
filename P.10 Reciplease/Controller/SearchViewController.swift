@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class SearchViewController: UIViewController {
     
@@ -14,8 +15,8 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        fetchRecipes()
     }
     
     @IBAction func addButtonTapped(_ sender: UIButton) {
@@ -54,6 +55,16 @@ extension SearchViewController {
     
     private func deleteIngredientsInTextView() {
         IngredientTextView.text = ""
+    }
+}
+
+
+extension SearchViewController {
+    func fetchRecipes() {
+        let request = AF.request("https://swapi.dev/api/films")
+        request.responseJSON { (data) in
+            print(data)
+        }
     }
 }
 

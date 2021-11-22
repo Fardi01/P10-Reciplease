@@ -13,31 +13,37 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var ingredientTextField: UITextField!
     @IBOutlet weak var IngredientTextView: UITextView!
     
+    var recipResponse: RecipeResponse?
+    
+    var ingredients = [String]()
+    var recipeResponse: RecipeResponse?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        fetchRecipes()
+
+        ingredients.append(ingredientTextField.text!)
     }
+    
     
     @IBAction func addButtonTapped(_ sender: UIButton) {
         addIngredients()
     }
     
-  
-    
     @IBAction func clearButtonTapped(_ sender: UIButton) {
         deleteIngredientsInTextView()
     }
     
-    
     @IBAction func searchRecipesButtonTapped(_ sender: UIButton) {
-        // Get Call API
+        makeAPICall()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let recipesList = segue.destination as? ListViewController else { return }
+        recipesList.recipeResponse = recipeResponse
     }
     
     
 }
-
-
 
 
 // MARK: - Privates func
@@ -56,15 +62,36 @@ extension SearchViewController {
     private func deleteIngredientsInTextView() {
         IngredientTextView.text = ""
     }
+    
 }
 
+// MARK: - Make API CALL
 
 extension SearchViewController {
-    func fetchRecipes() {
-        let request = AF.request("https://swapi.dev/api/films")
-        request.responseJSON { (data) in
-            print(data)
+    
+    private func makeAPICall() {
+            RecipesService.shared.getRecipe(ingredientList: IngredientTextView.text) { result in
+                switch result {
+                case .success(let response) :
+                    self.recipeResponse = response
+                    self.performSegue(withIdentifier: "segueToListViewController", sender: nil)
+                    print(response)
+                case .failure(let error) :
+                    self.presentAlert(title: "Bad request ⚠️", message: "network error !")
+                    print(error)
+            }
         }
     }
 }
 
+
+// MARK: - Present Alert VC
+
+extension SearchViewController {
+    
+    private func presentAlert(title: String, message: String) {
+        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+}

@@ -6,14 +6,19 @@
 //
 
 import UIKit
-import Alamofire
+import Foundation
 
 class ListViewController: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var recipeResponse: RecipeResponse?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        let nibName = UINib(nibName: "RecipeTableViewCell", bundle: nil)
+        tableView.register(nibName, forCellReuseIdentifier: "RecipeCell")
     }
     
     
@@ -21,19 +26,18 @@ class ListViewController: UIViewController {
 
 // MARK: - DataSource
 
-extension ListViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Return nombre de reponse renvoyé par l'API
-        return 3
+        return recipeResponse?.hits.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecipCell", for: indexPath)
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath)
+                as? RecipeTableViewCell else { fatalError() }
+        
+        cell.setRecipe = recipeResponse?.hits[indexPath.row]
         
         return cell
     }

@@ -1,13 +1,13 @@
 //
-//  FavoriteViewController.swift
+//  SearchRecipesDetailViewController.swift
 //  P.10 Reciplease
 //
-//  Created by fardi Issihaka on 16/11/2021.
+//  Created by fardi Issihaka on 18/11/2021.
 //
 
 import UIKit
 
-class FavoriteViewController: UIViewController {
+class SearchRecipesDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,5 +15,6 @@ class FavoriteViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+
 
 }

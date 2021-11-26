@@ -72,7 +72,7 @@
                                             <constraint firstAttribute="height" constant="34" id="Urq-39-E1F"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEM-eo-dos">
                                         <rect key="frame" x="314" y="72" width="80" height="31"/>
@@ -145,7 +145,7 @@
                                     <action selector="searchRecipesButtonTapped:" destination="4TD-O0-tY2" eventType="touchUpInside" id="D1b-tg-ZnM"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9sI-3Q-9gK">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sI-3Q-9gK">
                                 <rect key="frame" x="42" y="296" width="330" height="413"/>
                                 <color key="backgroundColor" red="0.2180541158" green="0.20071873069999999" blue="0.1956178844" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

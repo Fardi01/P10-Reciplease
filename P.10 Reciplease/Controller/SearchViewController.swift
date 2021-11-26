@@ -23,6 +23,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        manageKeyBoard()
         ingredients.append(ingredientTextField.text!)
         customButtons()
     }
@@ -120,4 +121,22 @@ extension SearchViewController {
         addButton.layer.cornerRadius = 5
         clearButton.layer.cornerRadius = 5
     }
+}
+
+
+// MARK: - Manage TextField Delegate
+
+extension SearchViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    private func manageKeyBoard() {
+        ingredientTextField.delegate = self
+        let tapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
 }

@@ -33,11 +33,19 @@ class DetailRecipeViewController: UIViewController {
         customButton()
     }
     
+    // Executer core data dès l'affichage de l'application pour recupéré les donnée sauvegarder
+    // ViewDidLoad
+    
     
     // MARK: - Action Buttons
     
     @IBAction func favoriteButtonTapped(_ sender: UIBarButtonItem) {
         
+        // Si La recette est déjà dans Favori, on la supprime et on remet le bouton Normale
+        deleteFromFavorites()
+        // Si non, on ajoute la recette au favori et le bouton passe au vert
+        addToFavorites()
+
     }
     
     @IBAction func getDirectionsButtonTapped(_ sender: UIButton) {
@@ -67,12 +75,27 @@ extension DetailRecipeViewController {
 }
 
 
+// MARK: - Private Functions for Favorite Button (Add and Delete in Favorite)
+
+extension DetailRecipeViewController {
+    
+    private func addToFavorites() {
+        
+    }
+    
+    private func deleteFromFavorites() {
+        
+    }
+}
+
+
 // MARK: - Custom some Views
 
 extension DetailRecipeViewController {
     private func customContentTimeView(view: UIView) {
         view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 0.8
+        view.layer.cornerRadius = 5
     }
     
     private func customContentTitleView(view: UIView) {

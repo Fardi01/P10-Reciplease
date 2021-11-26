@@ -21,11 +21,10 @@ class RecipeTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // Customise les cellules
         contentTimeView.layer.borderWidth = 0.8
+        contentTimeView.layer.cornerRadius = 5
         contentTimeView.layer.borderColor = UIColor.white.cgColor
         
-        // Gradient color
         contentTextView.applyGradient(isVertical: true, colorArray: [UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0), UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1)])
     }
 
@@ -46,6 +45,17 @@ class RecipeTableViewCell: UITableViewCell {
             recipeYield.text = "\(Int(setRecipe!.recipe.yield))"
             recipeMinutes.text = setRecipe?.recipe.totalTime.convertTime
             recipeSubtitle.text = setRecipe?.recipe.ingredientLines[0]
+        }
+    }
+    
+    var favoriteRecipe: FavoriteRecipes? {
+        didSet {
+            guard let image = favoriteRecipe?.image else {return}
+            recipeImage.image = UIImage(data: image)
+            recipeTitle.text = favoriteRecipe?.title
+            recipeSubtitle.text = favoriteRecipe?.ingredients?[0]
+            recipeMinutes.text = favoriteRecipe?.totalTime
+            recipeYield.text = favoriteRecipe?.yield
         }
     }
 

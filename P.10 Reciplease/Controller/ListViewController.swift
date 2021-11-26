@@ -42,12 +42,12 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath)
-                as? RecipeTableViewCell else { fatalError() }
+        guard let recipeCell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath)
+                as? RecipeTableViewCell else { return UITableViewCell() }
         
-        cell.setRecipe = recipeResponse?.hits[indexPath.row]
+        recipeCell.setRecipe = recipeResponse?.hits[indexPath.row]
 
-        return cell
+        return recipeCell
     }
     
     // J'utilise une didSelectedRow pour envoyer les éléments selectionner à la detail view

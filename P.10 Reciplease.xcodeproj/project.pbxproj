@@ -27,6 +27,7 @@
 		D678AC1B27485ED000FFDE6E /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D678AC1A27485ED000FFDE6E /* NetworkSession.swift */; };
 		D678AC1D27486EAF00FFDE6E /* EdamamAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D678AC1C27486EAF00FFDE6E /* EdamamAPI.swift */; };
 		D688D733274F183700B58B25 /* FavoriteRecipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D688D732274F183700B58B25 /* FavoriteRecipes.swift */; };
+		D69D5165275042740078B7E4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69D5164275042740078B7E4 /* CoreDataManager.swift */; };
 		D6B8580D2745557E00948B4B /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B8580C2745557E00948B4B /* ListViewController.swift */; };
 		D6D9D0F62746BAF600421715 /* DetailRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9D0F52746BAF600421715 /* DetailRecipeViewController.swift */; };
 		D6EBE4142743E4BF00858523 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EBE4132743E4BF00858523 /* SearchViewController.swift */; };
@@ -79,6 +80,7 @@
 		D678AC1A27485ED000FFDE6E /* NetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
 		D678AC1C27486EAF00FFDE6E /* EdamamAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamAPI.swift; sourceTree = "<group>"; };
 		D688D732274F183700B58B25 /* FavoriteRecipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipes.swift; sourceTree = "<group>"; };
+		D69D5164275042740078B7E4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D6B8580C2745557E00948B4B /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		D6D9D0F52746BAF600421715 /* DetailRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewController.swift; sourceTree = "<group>"; };
 		D6EBE4132743E4BF00858523 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 			children = (
 				D63A7E232738284A001DA263 /* P_10_Reciplease.xcdatamodeld */,
 				D688D732274F183700B58B25 /* FavoriteRecipes.swift */,
+				D69D5164275042740078B7E4 /* CoreDataManager.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				D678AC1D27486EAF00FFDE6E /* EdamamAPI.swift in Sources */,
 				D6B8580D2745557E00948B4B /* ListViewController.swift in Sources */,
 				D6EBE4142743E4BF00858523 /* SearchViewController.swift in Sources */,
+				D69D5165275042740078B7E4 /* CoreDataManager.swift in Sources */,
 				D63A7E1D2738284A001DA263 /* SceneDelegate.swift in Sources */,
 				D688D733274F183700B58B25 /* FavoriteRecipes.swift in Sources */,
 				D678AC1B27485ED000FFDE6E /* NetworkSession.swift in Sources */,

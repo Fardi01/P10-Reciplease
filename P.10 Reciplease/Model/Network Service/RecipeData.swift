@@ -12,6 +12,6 @@ struct RecipeData {
     let imageData: Data?
     let ingredients: [String]
     let url: String
-    let yield: Int
-    let totalTime: Int
+    let yield: String
+    let totalTime: String
 }

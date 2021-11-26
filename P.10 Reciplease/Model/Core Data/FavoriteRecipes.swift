@@ -10,5 +10,13 @@ import CoreData
 
 class FavoriteRecipes: NSManagedObject {
     
+    static var all: [FavoriteRecipes] {
+        
+        let request: NSFetchRequest<FavoriteRecipes> = FavoriteRecipes.fetchRequest()
+        
+        guard let favorites = try? AppDelegate.viewContext.fetch(request) else { return [] }
+        
+        return favorites
+    }
 }
 

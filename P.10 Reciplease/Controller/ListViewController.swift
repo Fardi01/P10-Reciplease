@@ -54,7 +54,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = recipeResponse?.hits[indexPath.row].recipe
         
-        recipeData = RecipeData(title: detail?.label ?? "", imageData: detail?.image?.data, ingredients: detail?.ingredientLines ?? [], url: detail?.url ?? "", yield: detail?.yield ?? 0, totalTime: detail?.totalTime ?? 0)
+        recipeData = RecipeData(title: detail?.label ?? "", imageData: detail?.image?.data, ingredients: detail?.ingredientLines ?? [], url: detail?.url ?? "", yield: String(detail?.yield ?? 0) , totalTime: String(detail?.totalTime ?? 0))
         
         performSegue(withIdentifier: "segueToRecipeDetailVC", sender: self)
     }

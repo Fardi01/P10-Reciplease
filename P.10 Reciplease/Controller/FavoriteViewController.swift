@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class FavoriteViewController: UIViewController {
 
@@ -13,15 +14,17 @@ class FavoriteViewController: UIViewController {
     
     var recipeData: RecipeData?
     var coreDataManager: CoreDataManager?
-    var favoriteRecipe: FavoriteRecipes?
+    var favoriteRecipe = FavoriteRecipes.all
+    private var footerText: String {
+        "Nothing in your Favorites. \n You need to add some recipes in your Favorite list !"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let nibName = UINib(nibName: "RecipeTableViewCell", bundle: nil)
         favoriteTableView.register(nibName, forCellReuseIdentifier: "RecipeCell")
-
-        // Do any additional setup after loading the view.
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -30,7 +33,12 @@ class FavoriteViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        favoriteRecipe = FavoriteRecipes.all
         favoriteTableView.reloadData()
+        
+        print("Voila ✅")
+        print(favoriteRecipe.count)
     }
 
 }
@@ -43,29 +51,54 @@ class FavoriteViewController: UIViewController {
 extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        FavoriteRecipes.all.count 
+        return favoriteRecipe.count
     }
     
+    // Je récupère les elements enregistrer dans Favorite pour les affiché dans les celulles Favorites
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let favoriteCell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath)
                 as? RecipeTableViewCell else { return UITableViewCell() }
         
-        favoriteCell.favoriteRecipe = FavoriteRecipes.all[indexPath.row]
+        favoriteCell.favoriteRecipe = favoriteRecipe[indexPath.row]
         
         return favoriteCell
     }
     
-    
+    // Quand je clique sur la recette je vais vers les details
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = FavoriteRecipes.all[indexPath.row]
         
         recipeData = RecipeData(title: detail.title ?? "", imageData: detail.image, ingredients: detail.ingredients ?? [], url: detail.recipesURL ?? "", yield: detail.yield ?? "", totalTime: detail.totalTime ?? "")
         
-        performSegue(withIdentifier: "segueToRecipeDetailVC", sender: self)
+        performSegue(withIdentifier: "segueToRecipeDetail", sender: self)
     }
+    
+    
+    
+    
+    
+    
     
     // Ajouter la suppression de la cellule avec le geste glissé à droite
     
-    // Ajouter le placeholder au cas ou y'a rien dans favorite 
+    
+    // Ajouter le placeholder au cas ou y'a rien dans favorite
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRect(x: tableView.center.x, y: tableView.center.y, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        let title = UILabel(frame: footerView.bounds)
+        title.text = footerText
+        title.textAlignment = .center
+        title.textColor = .lightGray
+        title.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        title.lineBreakMode = .byWordWrapping
+        title.numberOfLines = 0
+        footerView.addSubview(title)
+        return footerView
+        
+    }
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        footerText
+    }
 }
 

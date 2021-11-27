@@ -36,7 +36,7 @@ class RecipeTableViewCell: UITableViewCell {
     
     
     
-    
+    // Affichage de la partie APICall
     var setRecipe: Hit? {
         didSet {
             guard let imageUrl = URL(string: setRecipe?.recipe.image ?? "recipe image") else { return }
@@ -48,6 +48,7 @@ class RecipeTableViewCell: UITableViewCell {
         }
     }
     
+    // Affichage de la partie Favorite
     var favoriteRecipe: FavoriteRecipes? {
         didSet {
             guard let image = favoriteRecipe?.image else {return}

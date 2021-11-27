@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailRecipeViewController: UIViewController {
 
@@ -22,18 +23,20 @@ class DetailRecipeViewController: UIViewController {
     @IBOutlet weak var getDirectionButton: UIButton!
     
     var recipeData: RecipeData?
-    
+    var coreDataManager: CoreDataManager?
+    var favoriteList = FavoriteRecipes.all
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+       
+        
         updateRecipeDetails()
         customContentTimeView(view: contentTimeView)
         customContentTitleView(view: contentTitleView)
         customButton()
     }
     
-    // Executer core data dès l'affichage de l'application pour recupéré les donnée sauvegarder
+    // Executer core data dès l'affichage de l'application pour recupéré les données sauvegarder
     // ViewDidLoad
     
     
@@ -42,10 +45,17 @@ class DetailRecipeViewController: UIViewController {
     @IBAction func favoriteButtonTapped(_ sender: UIBarButtonItem) {
         
         // Si La recette est déjà dans Favori, on la supprime et on remet le bouton Normale
-        deleteFromFavorites()
+        //deleteFromFavorites()
         // Si non, on ajoute la recette au favori et le bouton passe au vert
         addToFavorites()
+        favoriteButton.image = UIImage(systemName: "star.fill")
+        print("➡️ J''ajoute :")
+        print(favoriteList)
+        
+        //favoriteButton.image = UIImage(systemName: "star")
 
+        // Ajouter une alerte pour indiquer que la recette à bien été rajouter au favoris
+        // Si enlevé, afficher que la recette est bien retiré des favoris 
     }
     
     @IBAction func getDirectionsButtonTapped(_ sender: UIButton) {
@@ -64,8 +74,8 @@ extension DetailRecipeViewController {
         guard let image = recipeData?.imageData else { return }
         recipeImage.image = UIImage(data: image)
         recipeTitle.text = recipeData?.title
-        recipeYield.text = "\(Int(recipeData?.yield ?? 0))"
-        recipeMinutes.text = recipeData?.totalTime.convertTime
+        recipeYield.text = recipeData?.yield 
+        recipeMinutes.text = recipeData?.totalTime
         recipeTextView.text = recipeData?.ingredients.joined(separator: ", \n - ")
         let stringIndex = recipeTextView.text.startIndex
         recipeTextView.text.insert(" ", at: stringIndex)
@@ -79,12 +89,13 @@ extension DetailRecipeViewController {
 
 extension DetailRecipeViewController {
     
-    private func addToFavorites() {
-        
+    func addToFavorites() {
+        guard let recipeData = recipeData else { return }
+        coreDataManager?.addRecipesToFavorite(using: recipeData.title, image: recipeData.imageData, ingredients: recipeData.ingredients, totalTime: recipeData.totalTime, yield: recipeData.yield, recipeURL: recipeData.url)
     }
     
     private func deleteFromFavorites() {
-        
+        coreDataManager?.deleteRecipeFromFavorites(using: recipeTitle.text ?? "")
     }
 }
 

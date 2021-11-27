@@ -40,6 +40,7 @@
                     <navigationItem key="navigationItem" title="Reciplease" id="PTX-M4-N5w"/>
                     <connections>
                         <outlet property="favoriteTableView" destination="kTa-kf-ioF" id="0hG-lv-dv4"/>
+                        <segue destination="IT2-AM-Fei" kind="show" identifier="segueToRecipeDetail" id="4Xu-qt-Vcp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Hf-5Z-3kH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -417,7 +418,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XOD-d8-4Rl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3263.7681159420295" y="-25.446428571428569"/>
+            <point key="canvasLocation" x="3186" y="-56"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="bgv-P1-qTP">
@@ -488,6 +489,9 @@
             <point key="canvasLocation" x="93" y="-500"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="4Xu-qt-Vcp"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="clock" catalog="system" width="128" height="121"/>
         <image name="hand.thumbsup.fill" catalog="system" width="128" height="121"/>

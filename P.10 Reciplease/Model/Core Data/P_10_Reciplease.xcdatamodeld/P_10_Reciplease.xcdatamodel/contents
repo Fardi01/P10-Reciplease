@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="FavoriteRecipes" representedClassName=".FavoriteRecipes" syncable="YES" codeGenerationType="category">
+    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class"/>
+    <entity name="FavoriteRecipes" representedClassName=".FavoriteRecipes" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="ingredients" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
         <attribute name="recipesURL" optional="YES" attributeType="String"/>
@@ -8,7 +9,10 @@
         <attribute name="totalTime" optional="YES" attributeType="String"/>
         <attribute name="yield" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="FavoritesRecipes" representedClassName="FavoritesRecipes" syncable="YES" codeGenerationType="class"/>
     <elements>
         <element name="FavoriteRecipes" positionX="-63" positionY="-18" width="128" height="119"/>
+        <element name="FavoritesRecipes" positionX="-63" positionY="27" width="128" height="29"/>
+        <element name="Entity" positionX="-54" positionY="63" width="128" height="29"/>
     </elements>
 </model>

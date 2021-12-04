@@ -12,6 +12,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
+    lazy var coreDataStack = CoreDataStack(modelName: "P_10_Reciplease")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -39,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     // MARK: - Core Data stack
-
+/*
     lazy var persistentContainer: NSPersistentContainer = {
         
         let container = NSPersistentContainer(name: "P_10_Reciplease")
@@ -77,8 +78,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    */
     
     
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        coreDataStack.saveContext()
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        coreDataStack.saveContext()
+    }
     
     
     

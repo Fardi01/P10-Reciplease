@@ -9,15 +9,20 @@ import UIKit
 import CoreData
 
 class FavoriteViewController: UIViewController {
-
+    
+    // MARK: - PROPERTIES
+    
     @IBOutlet weak var favoriteTableView: UITableView!
     
-    var recipeData: RecipeData?
+    var recipeData: RecipeData!
     var coreDataManager: CoreDataManager?
-    var favoriteRecipe = FavoriteRecipes.all
+    
     private var footerText: String {
         "Nothing in your Favorites. \n You need to add some recipes in your Favorite list !"
     }
+    
+    
+    // MARK: - VIEWS LIFECYCLE
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +30,9 @@ class FavoriteViewController: UIViewController {
         let nibName = UINib(nibName: "RecipeTableViewCell", bundle: nil)
         favoriteTableView.register(nibName, forCellReuseIdentifier: "RecipeCell")
         
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let coreDataStack = appDelegate.coreDataStack
+        coreDataManager = CoreDataManager(coreDataStack: coreDataStack)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -34,55 +42,53 @@ class FavoriteViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        favoriteRecipe = FavoriteRecipes.all
         favoriteTableView.reloadData()
-        
-        print("Voila ✅")
-        print(favoriteRecipe.count)
     }
 
 }
 
 
-// MARK: - Manage Data source & Delegate
+// MARK: - UITABLEVIEW DATA SOURCE
 
-// Je sauvegarde mes objets dans cette tableView
-
-extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
+extension FavoriteViewController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoriteRecipe.count
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-    // Je récupère les elements enregistrer dans Favorite pour les affiché dans les celulles Favorites
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return coreDataManager?.favoriteRecipes.count ?? 0
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let favoriteCell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath)
                 as? RecipeTableViewCell else { return UITableViewCell() }
         
-        favoriteCell.favoriteRecipe = favoriteRecipe[indexPath.row]
+        favoriteCell.favoriteRecipe = coreDataManager?.favoriteRecipes[indexPath.row]
         
         return favoriteCell
     }
     
-    // Quand je clique sur la recette je vais vers les details
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detail = FavoriteRecipes.all[indexPath.row]
         
-        recipeData = RecipeData(title: detail.title ?? "", imageData: detail.image, ingredients: detail.ingredients ?? [], url: detail.recipesURL ?? "", yield: detail.yield ?? "", totalTime: detail.totalTime ?? "")
+        let detail = coreDataManager?.favoriteRecipes[indexPath.row]
+        
+        recipeData = RecipeData(title: detail?.title ?? "", imageData: detail?.image, ingredients: detail?.ingredients ?? [], url: detail?.recipesURL ?? "", yield: detail?.yield ?? "", totalTime: detail?.totalTime ?? "")
         
         performSegue(withIdentifier: "segueToRecipeDetail", sender: self)
     }
     
+}
+
+extension FavoriteViewController: UITableViewDelegate {
     
-    
-    
-    
-    
-    
-    // Ajouter la suppression de la cellule avec le geste glissé à droite
-    
-    
-    // Ajouter le placeholder au cas ou y'a rien dans favorite
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteFromFavoriteCells(at: indexPath)
+        }
+    }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView(frame: CGRect(x: tableView.center.x, y: tableView.center.y, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
@@ -94,11 +100,31 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         title.lineBreakMode = .byWordWrapping
         title.numberOfLines = 0
         footerView.addSubview(title)
-        return footerView
+        return coreDataManager?.favoriteRecipes.count == 0 ? footerView : nil
         
-    }
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        footerText
     }
 }
 
+
+
+// MARK: - PRIVATE METHODS
+extension FavoriteViewController {
+    
+    private func deleteFromFavoriteCells(at indexPath: IndexPath) {
+        guard let title = coreDataManager?.favoriteRecipes[indexPath.row].title else { return }
+        coreDataManager?.deleteRecipeFromFavorites(using: title)
+        //coreDataManager?.favoriteRecipes.remove(at: indexPath.row)
+        
+        presentAlert(title: "Delete From Favorite", message: "The recipe: \(title) has been removed from your favorites")
+        favoriteTableView.reloadData()
+        
+    }
+    
+    
+    private func presentAlert(title: String, message: String) {
+        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .actionSheet)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
+}

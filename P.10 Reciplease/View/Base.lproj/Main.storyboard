@@ -37,7 +37,9 @@
                     <tabBarItem key="tabBarItem" title="Favorite" image="star" catalog="system" id="0KA-YA-zm3">
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
-                    <navigationItem key="navigationItem" title="Reciplease" id="PTX-M4-N5w"/>
+                    <navigationItem key="navigationItem" title="Reciplease" id="PTX-M4-N5w">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="6ny-GD-gKA"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="favoriteTableView" destination="kTa-kf-ioF" id="0hG-lv-dv4"/>
                         <segue destination="IT2-AM-Fei" kind="show" identifier="segueToRecipeDetail" id="4Xu-qt-Vcp"/>
@@ -50,7 +52,7 @@
         <!--Reciplease-->
         <scene sceneID="nJZ-WY-9fY">
             <objects>
-                <viewController id="4TD-O0-tY2" customClass="SearchViewController" customModule="P_10_Reciplease" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="4TD-O0-tY2" customClass="HomeViewController" customModule="P_10_Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fjq-4y-gyu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -418,7 +420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XOD-d8-4Rl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3186" y="-56"/>
+            <point key="canvasLocation" x="3185.507246376812" y="-56.25"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="bgv-P1-qTP">
@@ -451,6 +453,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hag-j6-hvA">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="25"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -490,7 +493,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="4Xu-qt-Vcp"/>
+        <segue reference="uHR-eh-3sh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="clock" catalog="system" width="128" height="121"/>

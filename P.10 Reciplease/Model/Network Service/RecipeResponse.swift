@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct RecipeResponse: Decodable {
+struct RecipeResponse: Codable {
     let q: String
     let hits: [Hit]
 }
 
-struct Hit: Decodable {
+struct Hit: Codable {
     let recipe: Recipe
 }
 
-struct Recipe: Decodable {
+struct Recipe: Codable {
     let label: String
     let image: String?
     let url: String?

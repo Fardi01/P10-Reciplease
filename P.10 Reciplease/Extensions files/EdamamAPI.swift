@@ -16,5 +16,3 @@ struct EdamamAPI {
     
 }
 
-//"https://api.edamam.com/search?"
-// https://api.edamam.com/api/recipes/v2?

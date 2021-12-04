@@ -7,24 +7,44 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class CoreDataManager {
+    
+    private let coreDataStack: CoreDataStack
+    private let managedObjectContext: NSManagedObjectContext
+    
+    var favoriteRecipes: [FavoriteRecipes] {
+        
+        let request: NSFetchRequest<FavoriteRecipes> = FavoriteRecipes.fetchRequest()
+        
+        guard let favorites = try? managedObjectContext.fetch(request) else { return [] }
+        
+        return favorites
+    }
+    
+    init(coreDataStack: CoreDataStack) {
+        self.coreDataStack = coreDataStack
+        self.managedObjectContext = coreDataStack.context
+    }
+    
+    
     
     
     // MARK: - Add Recipe in Favorite
     
-    func addRecipesToFavorite(using title: String, image: Data?, ingredients: [String], totalTime: String, yield: String, recipeURL: String) {
+    func addRecipesToFavorite(title: String, image: Data?, ingredients: [String], totalTime: String, yield: String, recipesURL: String) {
         
-        let favorite = FavoriteRecipes(context: AppDelegate.viewContext)
+        let favorite = FavoriteRecipes(context: managedObjectContext)
         
         favorite.title = title
         favorite.image = image
         favorite.ingredients = ingredients
         favorite.totalTime = totalTime
         favorite.yield = yield
-        favorite.recipesURL = recipeURL
+        favorite.recipesURL = recipesURL
         
-        try? AppDelegate.viewContext.save()
+        coreDataStack.saveContext()
     }
     
     
@@ -32,13 +52,14 @@ class CoreDataManager {
     
     func deleteRecipeFromFavorites(using title: String) {
         let request: NSFetchRequest<FavoriteRecipes> = FavoriteRecipes.fetchRequest()
-        request.predicate = NSPredicate(format: "name == %@", title)
         
-        guard let favoritesRecipe = try? AppDelegate.viewContext.fetch(request) else { return }
+        request.predicate = NSPredicate(format: "title == %@", title)
         
-        favoritesRecipe.forEach { AppDelegate.viewContext.delete($0) }
+        guard let favoritesRecipe = try? managedObjectContext.fetch(request) else { return }
         
-        try? AppDelegate.viewContext.save()
+        favoritesRecipe.forEach { managedObjectContext.delete($0) }
+        
+        coreDataStack.saveContext()
     }
     
     
@@ -46,9 +67,10 @@ class CoreDataManager {
     
     func recipeAlreadySavedInFavorite(using title: String) -> Bool {
         let request: NSFetchRequest<FavoriteRecipes> = FavoriteRecipes.fetchRequest()
-        request.predicate = NSPredicate(format: "name == %@", title)
         
-        guard let favoritesRecipe = try? AppDelegate.viewContext.fetch(request) else { return false }
+        request.predicate = NSPredicate(format: "title == %@", title)
+        
+        guard let favoritesRecipe = try? managedObjectContext.fetch(request) else { return false }
         
         if favoritesRecipe.isEmpty {
             return false

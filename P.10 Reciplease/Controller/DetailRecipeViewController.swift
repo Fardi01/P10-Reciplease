@@ -9,6 +9,8 @@ import UIKit
 import CoreData
 
 class DetailRecipeViewController: UIViewController {
+    
+    // MARK: - OUTLETS
 
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var recipeTitle: UILabel!
@@ -22,13 +24,30 @@ class DetailRecipeViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
     @IBOutlet weak var getDirectionButton: UIButton!
     
-    var recipeData: RecipeData?
+    
+    //MARK: - PROPERTIES
+    
+    var recipeData: RecipeData!
+    
     var coreDataManager: CoreDataManager?
-    var favoriteList = FavoriteRecipes.all
+    
+    var imageWithColor: UIImage {
+        return UIImage(systemName: "star.fill")!.withTintColor(UIColor(red: 64/255, green: 150/255, blue: 91/255, alpha: 1), renderingMode: .alwaysOriginal)
+    }
+    
+    var initialImage: UIImage {
+        return UIImage(systemName: "star")!
+    }
+    
+    
+    // MARK: - VIEWS LIFECYCLE
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let coreDataStack = appDelegate.coreDataStack
+        coreDataManager = CoreDataManager(coreDataStack: coreDataStack)
         
         updateRecipeDetails()
         customContentTimeView(view: contentTimeView)
@@ -36,26 +55,31 @@ class DetailRecipeViewController: UIViewController {
         customButton()
     }
     
-    // Executer core data dès l'affichage de l'application pour recupéré les données sauvegarder
-    // ViewDidLoad
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if coreDataManager?.recipeAlreadySavedInFavorite(using: recipeData?.title ?? "") == true {
+            favoriteButton.image = imageWithColor
+        } else {
+            favoriteButton.image = initialImage
+        }
+    }
     
     
-    // MARK: - Action Buttons
+    // MARK: - ACTION BUTTONS
     
     @IBAction func favoriteButtonTapped(_ sender: UIBarButtonItem) {
         
-        // Si La recette est déjà dans Favori, on la supprime et on remet le bouton Normale
-        //deleteFromFavorites()
-        // Si non, on ajoute la recette au favori et le bouton passe au vert
-        addToFavorites()
-        favoriteButton.image = UIImage(systemName: "star.fill")
-        print("➡️ J''ajoute :")
-        print(favoriteList)
-        
-        //favoriteButton.image = UIImage(systemName: "star")
-
-        // Ajouter une alerte pour indiquer que la recette à bien été rajouter au favoris
-        // Si enlevé, afficher que la recette est bien retiré des favoris 
+        if coreDataManager?.recipeAlreadySavedInFavorite(using: recipeData?.title ?? "") == true {
+            deleteFromFavorites()
+            favoriteButton.image = initialImage
+            if tabBarController?.selectedIndex == 1 {
+                navigationController?.popViewController(animated: true)
+            }
+        } else {
+            addToFavorites()
+            favoriteButton.image = imageWithColor
+            presentAlert(title: "Ajout aux favoris", message: "La recette viens d'être ajouté à vos favoris")
+        }
     }
     
     @IBAction func getDirectionsButtonTapped(_ sender: UIButton) {
@@ -66,7 +90,7 @@ class DetailRecipeViewController: UIViewController {
 }
 
 
-// MARK: - Update Views with Datas from API
+// MARK: - PRIVATE METHODS
 
 extension DetailRecipeViewController {
     
@@ -74,7 +98,7 @@ extension DetailRecipeViewController {
         guard let image = recipeData?.imageData else { return }
         recipeImage.image = UIImage(data: image)
         recipeTitle.text = recipeData?.title
-        recipeYield.text = recipeData?.yield 
+        recipeYield.text = recipeData?.yield
         recipeMinutes.text = recipeData?.totalTime
         recipeTextView.text = recipeData?.ingredients.joined(separator: ", \n - ")
         let stringIndex = recipeTextView.text.startIndex
@@ -82,27 +106,7 @@ extension DetailRecipeViewController {
         recipeTextView.text.insert("-", at: stringIndex)
         recipeTextView.text.insert(" ", at: stringIndex)
     }
-}
-
-
-// MARK: - Private Functions for Favorite Button (Add and Delete in Favorite)
-
-extension DetailRecipeViewController {
     
-    func addToFavorites() {
-        guard let recipeData = recipeData else { return }
-        coreDataManager?.addRecipesToFavorite(using: recipeData.title, image: recipeData.imageData, ingredients: recipeData.ingredients, totalTime: recipeData.totalTime, yield: recipeData.yield, recipeURL: recipeData.url)
-    }
-    
-    private func deleteFromFavorites() {
-        coreDataManager?.deleteRecipeFromFavorites(using: recipeTitle.text ?? "")
-    }
-}
-
-
-// MARK: - Custom some Views
-
-extension DetailRecipeViewController {
     private func customContentTimeView(view: UIView) {
         view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 0.8
@@ -116,4 +120,27 @@ extension DetailRecipeViewController {
     private func customButton() {
         getDirectionButton.layer.cornerRadius = 5
     }
+    
+    private func addToFavorites() {
+        guard let recipeData = recipeData else { return }
+        coreDataManager?.addRecipesToFavorite(title: recipeData.title, image: recipeData.imageData, ingredients: recipeData.ingredients, totalTime: recipeData.totalTime, yield: recipeData.yield, recipesURL: recipeData.url)
+    }
+    
+    private func deleteFromFavorites() {
+        coreDataManager?.deleteRecipeFromFavorites(using: recipeTitle.text ?? "")
+    }
+    
+}
+
+
+// MARK: - UIALERT
+
+extension DetailRecipeViewController {
+    
+    private func presentAlert(title: String, message: String) {
+        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .actionSheet)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
 }

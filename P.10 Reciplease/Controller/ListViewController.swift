@@ -10,31 +10,34 @@ import Foundation
 
 class ListViewController: UIViewController {
     
+    // MARK: - PROPERTIES
+    
     @IBOutlet weak var recipeTableView: UITableView!
     
     var recipeResponse: RecipeResponse?
     var recipeData: RecipeData?
 
+    
+    
+    // MARK: - VIEWS LIFECYCLE
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // J'utilise UINib pour la reusable cell
         let nibName = UINib(nibName: "RecipeTableViewCell", bundle: nil)
         recipeTableView.register(nibName, forCellReuseIdentifier: "RecipeCell")
     }
     
-    // Je lie de reference les données de ma liste view Controler à la vue detail
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let recipeVC = segue.destination as? DetailRecipeViewController else { return }
         recipeVC.recipeData = recipeData
     }
-    
-    
 }
 
-// MARK: - DataSource
 
-extension ListViewController: UITableViewDataSource, UITableViewDelegate {
+// MARK: - UITABLEVIEW DATA SOURCE
+
+extension ListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipeResponse?.hits.count ?? 0
@@ -50,7 +53,13 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         return recipeCell
     }
     
-    // J'utilise une didSelectedRow pour envoyer les éléments selectionner à la detail view
+}
+
+
+// MARK: - UITABLEVIEW DELEGATE
+
+extension ListViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = recipeResponse?.hits[indexPath.row].recipe
         
@@ -58,6 +67,5 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         
         performSegue(withIdentifier: "segueToRecipeDetailVC", sender: self)
     }
-    
     
 }

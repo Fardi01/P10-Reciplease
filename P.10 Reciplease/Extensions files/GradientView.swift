@@ -7,8 +7,8 @@
 
 import UIKit
 import Foundation
-@IBDesignable
 
+/*
 class GradientView: UIView {
 
     @IBInspectable var topColor: UIColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0)
@@ -31,3 +31,4 @@ class GradientView: UIView {
     
 
 }
+*/

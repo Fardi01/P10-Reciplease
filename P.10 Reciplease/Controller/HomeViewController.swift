@@ -6,29 +6,31 @@
 //
 
 import UIKit
-import Alamofire
 
-class SearchViewController: UIViewController {
+class HomeViewController: UIViewController {
     
+    // MARK: - OUTLETS
     @IBOutlet weak var ingredientTextField: UITextField!
     @IBOutlet weak var IngredientTextView: UITextView!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     
+    
+    // MARK: - PROPERTIES
+    
     var ingredients = [String]()
     var recipeResponse: RecipeResponse?
     
     
+    // MARK: - VIEWS LIFECYCLE
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         manageKeyBoard()
         ingredients.append(ingredientTextField.text!)
         customButtons()
     }
-    
-    // MARK: - Manage Segue from Menu to -> List View Controller
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let recipesList = segue.destination as? ListViewController else { return }
@@ -36,13 +38,14 @@ class SearchViewController: UIViewController {
     }
     
     
-    // MARK: - Actions Buttons
+    // MARK: - BUTTONS ACTION
+    
     @IBAction func addButtonTapped(_ sender: UIButton) {
-        addIngredients()
+        addIngredientsToTextView()
     }
     
     @IBAction func clearButtonTapped(_ sender: UIButton) {
-        deleteIngredientsInTextView()
+        deleteIngredientsFromTextView()
     }
     
     @IBAction func searchRecipesButtonTapped(_ sender: UIButton) {
@@ -52,33 +55,9 @@ class SearchViewController: UIViewController {
 }
 
 
-// MARK: - Privates function (TextField & TextView)
+// MARK: - PRIVATE METHODS
 
-extension SearchViewController {
-    
-    private func addIngredients() {
-        guard let newIngredient = ingredientTextField.text, var ingredients = IngredientTextView.text else {
-            return
-        }
-        
-        if newIngredient.isEmpty {
-            presentAlert(title: "Oups 🙁", message: "Please add some ingredients !")
-        } else {
-            ingredients += "- \(newIngredient)" + "\n"
-            IngredientTextView.text = ingredients
-            ingredientTextField.text = ""
-        }
-    }
-    
-    private func deleteIngredientsInTextView() {
-        IngredientTextView.text = ""
-    }
-    
-}
-
-// MARK: - Make API CALL
-
-extension SearchViewController {
+extension HomeViewController {
     
     private func makeAPICall() {
         if IngredientTextView.text.isEmpty {
@@ -97,36 +76,40 @@ extension SearchViewController {
             }
         }
     }
-}
-
-
-// MARK: - Present Alert VC
-
-extension SearchViewController {
     
-    private func presentAlert(title: String, message: String) {
-        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        present(alertVC, animated: true, completion: nil)
+    
+    private func addIngredientsToTextView() {
+        guard let newIngredient = ingredientTextField.text, var ingredients = IngredientTextView.text else {
+            return
+        }
+        
+        if newIngredient.isEmpty {
+            presentAlert(title: "Oups 🙁", message: "Please add some ingredients !")
+        } else {
+            ingredients += "- \(newIngredient)" + "\n"
+            IngredientTextView.text = ingredients
+            ingredientTextField.text = ""
+        }
     }
-}
-
-
-// MARK: - Custom some Buttons
-
-extension SearchViewController {
+    
+    
+    private func deleteIngredientsFromTextView() {
+        IngredientTextView.text = ""
+    }
+    
     
     private func customButtons() {
         searchButton.layer.cornerRadius = 5
         addButton.layer.cornerRadius = 5
         clearButton.layer.cornerRadius = 5
     }
+    
 }
 
 
-// MARK: - Manage TextField Delegate
+// MARK: - UITEXTFIELD DELEGATE
 
-extension SearchViewController: UITextFieldDelegate {
+extension HomeViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -139,4 +122,15 @@ extension SearchViewController: UITextFieldDelegate {
         view.addGestureRecognizer(tapGesture)
     }
     
+}
+
+// MARK: - PRESENT ALERT
+
+extension HomeViewController {
+    
+    private func presentAlert(title: String, message: String) {
+        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
 }

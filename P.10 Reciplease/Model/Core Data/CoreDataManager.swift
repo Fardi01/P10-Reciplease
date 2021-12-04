@@ -11,6 +11,8 @@ import UIKit
 
 class CoreDataManager {
     
+    // MARK: - PROPERTIES
+    
     private let coreDataStack: CoreDataStack
     private let managedObjectContext: NSManagedObjectContext
     
@@ -27,8 +29,6 @@ class CoreDataManager {
         self.coreDataStack = coreDataStack
         self.managedObjectContext = coreDataStack.context
     }
-    
-    
     
     
     // MARK: - Add Recipe in Favorite

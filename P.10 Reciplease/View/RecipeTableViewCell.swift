@@ -8,6 +8,8 @@
 import UIKit
 
 class RecipeTableViewCell: UITableViewCell {
+    
+    // MARK: - OUTLETS
 
     @IBOutlet weak var contentTextView: UIView!
     @IBOutlet weak var recipeImage: UIImageView!
@@ -17,6 +19,8 @@ class RecipeTableViewCell: UITableViewCell {
     @IBOutlet weak var recipeMinutes: UILabel!
     @IBOutlet weak var contentTimeView: UIView!
     
+    
+    // MARK: - VIEWS LIFECYCLE
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,13 +34,12 @@ class RecipeTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     
     
-    // Affichage de la partie APICall
+    // MARK: - Setup Views with network datas
+    
     var setRecipe: Hit? {
         didSet {
             guard let imageUrl = URL(string: setRecipe?.recipe.image ?? "recipe image") else { return }
@@ -48,7 +51,8 @@ class RecipeTableViewCell: UITableViewCell {
         }
     }
     
-    // Affichage de la partie Favorite
+    // MARK: - Setup views with saved in context Datas
+    
     var favoriteRecipe: FavoriteRecipes? {
         didSet {
             guard let image = favoriteRecipe?.image else {return}
@@ -59,5 +63,4 @@ class RecipeTableViewCell: UITableViewCell {
             recipeYield.text = favoriteRecipe?.yield
         }
     }
-
 }

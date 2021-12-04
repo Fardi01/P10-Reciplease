@@ -10,6 +10,7 @@ import UIKit
 class HomeViewController: UIViewController {
     
     // MARK: - OUTLETS
+    
     @IBOutlet weak var ingredientTextField: UITextField!
     @IBOutlet weak var IngredientTextView: UITextView!
     @IBOutlet weak var searchButton: UIButton!

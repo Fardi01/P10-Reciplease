@@ -11,7 +11,6 @@
 		8C76AC87AF8A8A68E2CDAD8F /* Pods_P_10_Reciplease.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BA89C88E44C39BBCCA1A63D /* Pods_P_10_Reciplease.framework */; };
 		D601DC47274A7B6B0013BA09 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D601DC46274A7B6B0013BA09 /* Extensions.swift */; };
 		D616117F274D523700E3E5C4 /* RecipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D616117E274D523700E3E5C4 /* RecipeData.swift */; };
-		D62A97BF274C72C50030792B /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62A97BE274C72C50030792B /* GradientView.swift */; };
 		D63A7E1B2738284A001DA263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63A7E1A2738284A001DA263 /* AppDelegate.swift */; };
 		D63A7E1D2738284A001DA263 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63A7E1C2738284A001DA263 /* SceneDelegate.swift */; };
 		D63A7E222738284A001DA263 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D63A7E202738284A001DA263 /* Main.storyboard */; };
@@ -57,7 +56,6 @@
 		CD480B14398E8DF77FC59148 /* Pods-P.10 RecipleaseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-P.10 RecipleaseTests.release.xcconfig"; path = "Target Support Files/Pods-P.10 RecipleaseTests/Pods-P.10 RecipleaseTests.release.xcconfig"; sourceTree = "<group>"; };
 		D601DC46274A7B6B0013BA09 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D616117E274D523700E3E5C4 /* RecipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeData.swift; sourceTree = "<group>"; };
-		D62A97BE274C72C50030792B /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		D63A7E172738284A001DA263 /* P.10 Reciplease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "P.10 Reciplease.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D63A7E1A2738284A001DA263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D63A7E1C2738284A001DA263 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 			children = (
 				D678AC1C27486EAF00FFDE6E /* EdamamAPI.swift */,
 				D601DC46274A7B6B0013BA09 /* Extensions.swift */,
-				D62A97BE274C72C50030792B /* GradientView.swift */,
 			);
 			path = "Extensions files";
 			sourceTree = "<group>";
@@ -436,7 +433,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D63A7E252738284A001DA263 /* P_10_Reciplease.xcdatamodeld in Sources */,
-				D62A97BF274C72C50030792B /* GradientView.swift in Sources */,
 				D6D9D0F62746BAF600421715 /* DetailRecipeViewController.swift in Sources */,
 				D63A7E1B2738284A001DA263 /* AppDelegate.swift in Sources */,
 				D675D3662749B48E00D2CB9B /* RecipeTableViewCell.swift in Sources */,

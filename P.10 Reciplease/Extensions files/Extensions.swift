@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// MARK: - UIIMAGE Extension
+
 extension UIImageView {
     func getImage(with url: URL) {
         DispatchQueue.global().async { [weak self] in
@@ -21,6 +23,8 @@ extension UIImageView {
 }
 
 
+// MARK: - INTEGER Extension
+
 extension Int {
     var convertTime: String {
         let hours = self / 60
@@ -29,6 +33,8 @@ extension Int {
     }
 }
 
+
+// MARK: - STRING Extension
 
 extension String {
     var data: Data? {
@@ -39,7 +45,8 @@ extension String {
 }
 
 
-// Gradient color
+// MARK: - UIVIEW Extension
+
 extension UIView {
 
     func applyGradient(isVertical: Bool, colorArray: [UIColor]) {
@@ -60,5 +67,4 @@ extension UIView {
         gradientLayer.frame = bounds
         layer.insertSublayer(gradientLayer, at: 0)
     }
-
 }

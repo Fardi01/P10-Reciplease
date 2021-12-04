@@ -18,7 +18,6 @@ class ListViewController: UIViewController {
     var recipeData: RecipeData?
 
     
-    
     // MARK: - VIEWS LIFECYCLE
     
     override func viewDidLoad() {
@@ -52,7 +51,6 @@ extension ListViewController: UITableViewDataSource {
 
         return recipeCell
     }
-    
 }
 
 
@@ -67,5 +65,4 @@ extension ListViewController: UITableViewDelegate {
         
         performSegue(withIdentifier: "segueToRecipeDetailVC", sender: self)
     }
-    
 }

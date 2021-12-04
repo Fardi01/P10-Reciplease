@@ -8,11 +8,8 @@
 import Foundation
 
 struct EdamamAPI {
-    
     static let urlString = "https://api.edamam.com/search?"
     static let app_id = "1eb823d1"
     static let app_key = "51fcdfb3d333fd37ebaf67aebd009e80"
-    
-    
 }
 

@@ -121,10 +121,4 @@ extension FavoriteViewController {
     }
     
     
-    private func presentAlert(title: String, message: String) {
-        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .actionSheet)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        present(alertVC, animated: true, completion: nil)
-    }
-    
 }

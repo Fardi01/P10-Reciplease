@@ -52,7 +52,7 @@ class HomeViewController: UIViewController {
     @IBAction func searchRecipesButtonTapped(_ sender: UIButton) {
         makeAPICall()
     }
-    
+
 }
 
 
@@ -125,13 +125,3 @@ extension HomeViewController: UITextFieldDelegate {
     
 }
 
-// MARK: - PRESENT ALERT
-
-extension HomeViewController {
-    
-    private func presentAlert(title: String, message: String) {
-        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        present(alertVC, animated: true, completion: nil)
-    }
-}

@@ -78,7 +78,7 @@ class DetailRecipeViewController: UIViewController {
         } else {
             addToFavorites()
             favoriteButton.image = imageWithColor
-            presentAlert(title: "Ajout aux favoris", message: "La recette viens d'être ajouté à vos favoris")
+            presentAlert(title: "Add to favorites", message: "Recipe has been added to your favourites ")
         }
     }
     
@@ -135,12 +135,4 @@ extension DetailRecipeViewController {
 
 // MARK: - UIALERT
 
-extension DetailRecipeViewController {
-    
-    private func presentAlert(title: String, message: String) {
-        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .actionSheet)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        present(alertVC, animated: true, completion: nil)
-    }
-    
-}
+

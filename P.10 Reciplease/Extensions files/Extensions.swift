@@ -68,3 +68,13 @@ extension UIView {
         layer.insertSublayer(gradientLayer, at: 0)
     }
 }
+
+extension UIViewController {
+    
+    public func presentAlert(title: String, message: String) {
+        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
+}
